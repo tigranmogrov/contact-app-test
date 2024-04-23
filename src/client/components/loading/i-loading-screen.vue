@@ -7,17 +7,3 @@
     </div>
   </Transition>
 </template>
-
-<style>
-.app-loading-screen {
-  position: fixed;
-  z-index: 100;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background-color: var(--app-color-bg-primary);
-}
-.app-loading-screen-bar {
-  max-inline-size: 300px;
-}
-</style>

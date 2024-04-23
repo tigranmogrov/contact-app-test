@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import AppHeader from '@/components/header/app-header.vue';
+</script>
 <template>
   <app-header />
 
@@ -11,7 +14,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import AppHeader from '@/components/app-header.component.vue';
-</script>

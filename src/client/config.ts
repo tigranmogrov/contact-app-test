@@ -1,3 +1,3 @@
 export const config = {
-	contactListPageSize: 3,
-}
+  contactListPageSize: 3
+};

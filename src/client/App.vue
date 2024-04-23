@@ -1,17 +1,17 @@
 <template>
-	<AppHeader />
+  <app-header />
 
-	<div class="app-body">
-		<RouterView />
-	</div>
+  <div class="app-body">
+    <RouterView />
+  </div>
 
-	<div class="app-footer">
-		<div class="container">
-			<p>NexCore Take Home Test</p>
-		</div>
-	</div>
+  <div class="app-footer">
+    <div class="container">
+      <p>NexCore Take Home Test</p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import AppHeader from '@/components/app-header.component.vue'
+import AppHeader from '@/components/app-header.component.vue';
 </script>

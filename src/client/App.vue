@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppFooter from '@/components/footer/app-footer.vue';
 import AppHeader from '@/components/header/app-header.vue';
 </script>
 <template>
@@ -8,9 +9,5 @@ import AppHeader from '@/components/header/app-header.vue';
     <RouterView />
   </div>
 
-  <div class="app-footer">
-    <div class="container">
-      <p>NexCore Take Home Test</p>
-    </div>
-  </div>
+  <app-footer />
 </template>

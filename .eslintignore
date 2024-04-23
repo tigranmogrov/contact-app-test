@@ -1,0 +1,7 @@
+public
+config/*
+/node_modules
+.husky/*
+.eslintrc.cjs
+.prettier.json
+src/server/*

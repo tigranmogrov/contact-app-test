@@ -1,0 +1,9 @@
+# Ignore artifacts:
+public
+config/*
+node_modules
+package.json
+package-lock.json
+.eslintrc.cjs
+.husky/*
+/src/server/*

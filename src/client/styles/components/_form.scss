@@ -1,0 +1,10 @@
+label.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type='checkbox'] {
+  block-size: 1rem;
+  inline-size: 1rem;
+}

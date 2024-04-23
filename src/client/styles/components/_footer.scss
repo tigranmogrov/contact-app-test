@@ -1,0 +1,14 @@
+/* Footer */
+
+.app-footer {
+  grid-row: footer;
+  background-color: $app-color-bg-secondary;
+  padding-block: 32px;
+
+  p {
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 1px;
+    color: $app-color-secondary;
+  }
+}

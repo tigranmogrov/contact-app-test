@@ -1,0 +1,26 @@
+.app-pagination {
+  &__nav {
+    row-gap: 0.5rem;
+    @media screen and (min-width: 767px) {
+      row-gap: 0;
+    }
+  }
+
+  &__nav-list {
+    width: 100%;
+    justify-content: center;
+    @media screen and (min-width: 767px) {
+      width: auto;
+    }
+    span.button {
+      pointer-events: none;
+    }
+  }
+
+  &__nav-buttons {
+    order: 1;
+    @media screen and (min-width: 767px) {
+      order: inherit;
+    }
+  }
+}

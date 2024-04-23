@@ -1,0 +1,17 @@
+.app-wrapper {
+  display: grid;
+  grid-template-rows: [body] minmax(0, 1fr) [footer] max-content;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}
+
+.app-body {
+  grid-row: body;
+  padding-top: $app-header-height;
+}
+
+.app-container {
+  margin-inline: auto;
+  width: calc(100% - ($container-gap * 2));
+  max-width: $container-width;
+}

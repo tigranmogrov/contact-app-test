@@ -1,0 +1,35 @@
+html {
+  overflow-y: auto;
+}
+
+body {
+  font-family: $app-font-family;
+  font-size: 0.875rem;
+  color: $app-color-primary;
+  background-color: $app-color-bg-primary;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: $app-font-family;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.box {
+  color: $app-color-primary;
+}
+
+.section {
+  padding: 1.5rem 0;
+}

@@ -1,0 +1,23 @@
+/* Header */
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 35;
+  inline-size: 100%;
+  background-color: $app-color-bg-secondary;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    block-size: 60px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+  }
+}

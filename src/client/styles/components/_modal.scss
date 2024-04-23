@@ -1,0 +1,11 @@
+.modal {
+  &.confirmation-modal {
+    .modal-content {
+      max-inline-size: 420px;
+    }
+  }
+  .modal-content {
+    max-width: calc(100% - 16px);
+    max-height: calc(100vh - 32px);
+  }
+}

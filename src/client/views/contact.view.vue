@@ -3,27 +3,7 @@
 
   <section v-else class="section">
     <div class="container">
-      <h1 class="title is-size-5">
-        {{
-          `${contact.personalization.name.firstname} ${contact.personalization.name.lastname}${
-            contact.personalization.name.middlename
-              ? ' ' + contact.personalization.name.middlename
-              : ''
-          }`
-        }}
-      </h1>
-      <p>
-        <span class="has-text-grey">Телефон:</span>
-        {{ contact.telephone }}
-      </p>
-      <p>
-        <span class="has-text-grey">E-mail:</span>
-        {{ contact.email }}
-      </p>
-      <p>
-        <span class="has-text-grey">Є співробітником:</span>
-        {{ contact.employeeId ? 'Так' : 'Ні' }}
-      </p>
+      <i-contact-info id="" personalization="" employee-id="" telephone="" email="" />
 
       <div class="is-flex is-align-items-center is-flex-wrap-wrap mt-6">
         <button
@@ -134,6 +114,7 @@
 
 <script setup lang="ts">
 import AppLoadingScreen from '@/components/app-loading-screen.component.vue';
+import IContactInfo from '@/components/contact/i-contact-info.vue';
 import { Contact } from '@/models';
 import { RouteName } from '@/router';
 import axios from 'axios';

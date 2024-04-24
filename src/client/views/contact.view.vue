@@ -1,5 +1,5 @@
 <template>
-  <app-loading-screen v-if="!contact" />
+  <i-loading-screen v-if="!contact" />
 
   <section v-else class="section">
     <div class="container">
@@ -60,9 +60,9 @@
 </template>
 
 <script setup lang="ts">
-import AppLoadingScreen from '@/components/app-loading-screen.component.vue';
 import IContactInfo from '@/components/contact/i-contact-info.vue';
 import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
+import ILoadingScreen from '@/components/loading/i-loading-screen.component.vue';
 import { Contact } from '@/models';
 import { RouteName } from '@/router';
 import axios from 'axios';

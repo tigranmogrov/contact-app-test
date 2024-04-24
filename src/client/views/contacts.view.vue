@@ -36,59 +36,7 @@
 
       <template v-if="listing">
         <i-contact-list />
-        <div class="app-pagination py-6">
-          <div class="is-flex is-justify-content-center mb-4">
-            <button
-              type="button"
-              class="button"
-              :class="{ 'is-loading': loadingMore }"
-              @click="loadMore"
-            >
-              Показати ще {{ nextPageSize }}
-            </button>
-          </div>
-
-          <div class="is-flex is-justify-content-center">
-            <button type="button" class="button mx-2" @click="loadContacts({ fromPageNumber: 1 })">
-              &lt;&lt;
-            </button>
-            <button
-              type="button"
-              class="button mx-2"
-              @click="
-                loadContacts({
-                  fromPageNumber: listing.fromPageNumber - 1
-                })
-              "
-            >
-              &lt;
-            </button>
-
-            <button
-              v-for="pageNumber in pageCount"
-              type="button"
-              class="button mx-2"
-              :class="{
-                'is-dark':
-                  pageNumber <= listing.toPageNumber && pageNumber >= listing.fromPageNumber
-              }"
-              @click="loadContacts({ fromPageNumber: pageNumber })"
-            >
-              {{ pageNumber }}
-            </button>
-
-            <button
-              type="button"
-              class="button mx-2"
-              @click="loadContacts(listing.fromPageNumber + 1)"
-            >
-              &gt;
-            </button>
-            <button type="button" class="button mx-2" @click="loadContacts(listing.last)">
-              &gt;&gt;
-            </button>
-          </div>
-        </div>
+        <i-pagination />
       </template>
     </div>
   </section>
@@ -99,25 +47,12 @@
 <script setup lang="ts">
 import AddContactForm from '@/components/add-contact-form.component.vue';
 import IContactList from '@/components/contact/i-contact-list.vue';
+import IPagination from '@/components/pagination/i-pagination.vue';
 import { config } from '@/config';
 import { Contact, ContactContract } from '@/models/contact.model';
-import { RouteName } from '@/router';
-import axios from 'axios';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const listing = ref();
-let loadingMore = ref(false);
-
-async function loadMore() {
-  if (!listing.value) throw new Error('no data was loaded');
-
-  loadingMore.value = true;
-  await loadContacts({
-    fromPageNumber: listing.value.fromPageNumber,
-    toPageNumber: listing.value.toPageNumber + 1
-  });
-  loadingMore.value = false;
-}
 
 enum SortDirection {
   Ascending,
@@ -202,23 +137,6 @@ async function loadContacts(queryIncoming: ContactsQuery) {
 
 onMounted(async () => {
   await loadContacts({ fromPageNumber: 1 });
-});
-
-let nextPageSize = computed(() => {
-  if (!listing.value) return 0;
-
-  if (listing.value.toPageNumber === listing.value.last) return 0;
-
-  if (listing.value.toPageNumber === listing.value.last - 1)
-    return listing.value.total % listing.value.size;
-
-  return listing.value.size;
-});
-
-let pageCount = computed(() => {
-  if (!listing.value) return 0;
-
-  return Math.floor(listing.value.total / listing.value.size);
 });
 
 const sort = async (selectedOption: number) => {

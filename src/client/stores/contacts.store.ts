@@ -18,7 +18,7 @@ export const useContactsStore = defineStore('contacts', () => {
   const totalPaginationPage = computed(() => contactData.last);
   const contacts = computed(() => contactData.items);
   const currentPage = computed(() => contactData.toPageNumber);
-  const fromPageNumber = computed(() => contactData.fromPageNumber);
+  const fromPage = computed(() => contactData.fromPageNumber);
   const lastPage = computed(() => contactData.toPageNumber === contactData.last);
 
   const getContactsData = async (queryParams: Partial<ContactsQueryType> = {}): Promise<void> => {
@@ -56,7 +56,7 @@ export const useContactsStore = defineStore('contacts', () => {
     totalPaginationPage,
     currentPage,
     contacts,
-    fromPageNumber,
+    fromPage,
     lastPage,
     getContactsData,
     setContactData

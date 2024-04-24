@@ -65,18 +65,23 @@ const getSelectedSort = computed(() => {
 const isEmployment = ref(parsedQuery.value['isEmployee'] ?? false);
 const selectedSortOption = ref(getSelectedSort.value);
 
+const employmentQueryAction = (state: boolean) => {
+  if (state) {
+    addQueryParams({ isEmployee: state, fromPageNumber: 1, toPageNumber: 1 });
+  } else {
+    removeQueryParams(['isEmployee', 'fromPageNumber', 'toPageNumber']);
+  }
+};
+
 const getEmployment = (value: boolean) => {
   contactStore.getContactsData({
     isEmployee: value,
     fromPageNumber: 1,
     toPageNumber: 1
   });
-  if (value) {
-    addQueryParams({ isEmployee: value, fromPageNumber: 1, toPageNumber: 1 });
-  } else {
-    removeQueryParams(['isEmployee', 'fromPageNumber', 'toPageNumber']);
-  }
+  employmentQueryAction(value);
 };
+
 const sortQueryParamsAction = (id: number, selected: { criterion: number; direction: number }) => {
   if (id == 1) {
     removeQueryParams(['sorting[criterion]', 'sorting[direction]']);

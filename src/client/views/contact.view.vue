@@ -35,35 +35,6 @@
         </button>
       </div>
 
-      <div class="modal confirmation-modal" :class="{ 'is-active': isDeletionRequested }">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-          <div class="box">
-            <p class="has-text-weight-medium mb-1">Ви дійсно бажаєте видалити даний контакт?</p>
-            <p>Контакт не буде доступним в списку після видалення.</p>
-
-            <div class="is-flex is-align-items-center is-justify-content-end mt-4">
-              <button
-                type="button"
-                class="button is-small is-light"
-                :class="{ 'is-loading': deleting }"
-                @click="deleteContact"
-              >
-                Так, видалити контакт
-              </button>
-
-              <button
-                type="button"
-                class="button is-small is-dark ml-2"
-                @click="isDeletionRequested = false"
-              >
-                Ні, скасувати
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div v-if="isEditFormOpened" class="box mt-6">
         <p class="title is-size-6">Редагувати контакт:</p>
         <form class="form" @submit.prevent="save">
@@ -109,6 +80,25 @@
         </form>
       </div>
     </div>
+    <teleport to="body">
+      <i-modal class="confirmation-modal">
+        <div class="box">
+          <template>
+            <h3 class="has-text-weight-medium mb-1">Ви дійсно бажаєте видалити даний контакт?</h3>
+            <p>Контакт не буде доступним в списку після видалення.</p>
+            <div class="is-flex is-align-items-center is-justify-content-end mt-4">
+              <button type="button" class="button is-small is-light" @click="deleteContact">
+                Так, видалити контакт
+              </button>
+
+              <button type="button" class="button is-small is-dark ml-2">Ні, скасувати</button>
+            </div>
+          </template>
+
+          <p>контакт видалено зі списку</p>
+        </div>
+      </i-modal>
+    </teleport>
   </section>
 </template>
 

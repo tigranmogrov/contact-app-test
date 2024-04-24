@@ -35,38 +35,7 @@
       </div>
 
       <template v-if="listing">
-        <div class="contact-listing">
-          <RouterLink
-            v-for="contact in listing.items"
-            :key="contact.id"
-            :to="{
-              name: RouteName.Contact,
-              params: { id: contact.id }
-            }"
-            class="box"
-          >
-            <p class="has-text-weight-bold">
-              {{
-                `${contact.personalization.name.firstname} ${
-                  contact.personalization.name.lastname
-                }${
-                  contact.personalization.name.middlename
-                    ? ' ' + contact.personalization.name.middlename
-                    : ''
-                }`
-              }}
-            </p>
-
-            <p>{{ contact.telephone }}</p>
-
-            <p class="is-italic">{{ contact.email }}</p>
-
-            <p v-if="contact.employeeId" class="is-size-7 has-text-weight-medium has-text-grey">
-              Співробітник підприємства
-            </p>
-          </RouterLink>
-        </div>
-
+        <i-contact-list />
         <div class="app-pagination py-6">
           <div class="is-flex is-justify-content-center mb-4">
             <button
@@ -129,6 +98,7 @@
 
 <script setup lang="ts">
 import AddContactForm from '@/components/add-contact-form.component.vue';
+import IContactList from '@/components/contact/i-contact-list.vue';
 import { config } from '@/config';
 import { Contact, ContactContract } from '@/models/contact.model';
 import { RouteName } from '@/router';

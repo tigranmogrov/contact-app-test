@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ICreateContact from '@/components/edit-form/i-create-contact.vue';
 import {
   useAddQueryParams,
   useRemoveQueryParams,
@@ -122,6 +123,8 @@ const sortAction = (value: number) => {
       <input v-model="isEmployment" type="checkbox" @update:model-value="getEmployment" />
       Показати тільки співробітників
     </label>
+
+    <i-create-contact />
   </div>
 </template>
 

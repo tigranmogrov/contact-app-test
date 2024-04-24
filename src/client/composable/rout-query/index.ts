@@ -1,4 +1,4 @@
-import { LocationQuery } from 'vue-router';
+import { LocationQuery, useRouter } from 'vue-router';
 
 interface Query {
   [key: string]: string | number | Record<string, string | number>;
@@ -35,3 +35,25 @@ export const useTransformQuery = (): ((query: LocationQuery) => Query) => {
     return transformed;
   };
 };
+
+export function useAddQueryParams() {
+  const router = useRouter();
+
+  return async (queryParams: LocationQuery) => {
+    const currentQuery = { ...router.currentRoute.value.query };
+    const newQuery = { ...currentQuery, ...queryParams };
+    await router.push({ query: newQuery });
+  };
+}
+
+export function useRemoveQueryParams() {
+  const router = useRouter();
+
+  return async (queryParams: string[]) => {
+    const currentQuery = { ...router.currentRoute.value.query };
+    for (const param of queryParams) {
+      delete currentQuery[param];
+    }
+    await router.push({ query: currentQuery });
+  };
+}

@@ -14,8 +14,23 @@ const transformQuery = useTransformQuery();
 const router = useRouter();
 const { isLoading, contacts } = storeToRefs(contactStore);
 const loading = computed(() => isLoading.value);
+
+const defaultQuery = {
+  fromPageNumber: 1,
+  toPageNumber: 1,
+  sorting: { criterion: 1, direction: 1 },
+  isEmployee: null
+};
+
+const queryRout = transformQuery(router.currentRoute.value.query);
+
 onMounted(() => {
-  contactStore.getContactsData({ ...transformQuery(router.currentRoute.value.query) });
+  try {
+    const query = Object.keys(queryRout).length ? queryRout : defaultQuery;
+    contactStore.getContactsData({ ...query });
+  } catch (error: any) {
+    console.error(error);
+  }
 });
 </script>
 

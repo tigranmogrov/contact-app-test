@@ -64,8 +64,9 @@ import IContactInfo from '@/components/contact/i-contact-info.vue';
 import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
 import ILoadingScreen from '@/components/loading/i-loading-screen.vue';
 import { ContractEnum } from '@/enums/contract.enum.ts';
+import { EditFormEnum } from '@/enums/edit-form.enum.ts';
 import { useContactsStore } from '@/stores/contacts.store.ts';
-import { IContact } from '@/types';
+import { IContact, UpdateContactEmitType } from '@/types';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -105,6 +106,17 @@ const deleteContact = async () => {
 
 const closeModal = () => {
   isDeletionModal.value = false;
+};
+
+const editAction = async (event: UpdateContactEmitType) => {
+  switch (event.status) {
+    case EditFormEnum.CANCEL:
+      isEditFormOpened.value = event.close;
+      break;
+    case EditFormEnum.SAVE:
+      isEditFormOpened.value = event.close;
+      contact.value = await contactStore.getContactById(String(route.params.id));
+  }
 };
 </script>
 

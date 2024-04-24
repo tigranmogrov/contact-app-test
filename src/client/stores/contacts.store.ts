@@ -1,5 +1,6 @@
 import { API } from '@/api';
 import { config } from '@/config.ts';
+import { ContractEnum } from '@/enums/contract.enum.ts';
 import {
   ContactsQueryType,
   IContact,
@@ -87,6 +88,14 @@ export const useContactsStore = defineStore('contacts', () => {
     }
   };
 
+  const actionContract = async (contactId: string, status: ContractEnum): Promise<void> => {
+    try {
+      await API.post(`/api/contacts/${status}-employment`, { id: contactId });
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
   const setContactData = (data: IContactData): void => {
     contactData.last = data.last;
     contactData.toPageNumber = data.toPageNumber;
@@ -109,6 +118,7 @@ export const useContactsStore = defineStore('contacts', () => {
     createContact,
     updateContact,
     deleteContact,
+    actionContract,
     setContactData
   };
 });

@@ -2,31 +2,32 @@
   <i-loading-screen v-if="!contact" />
 
   <section v-else class="section">
-    <div class="container">
-      <i-contact-info id="" personalization="" employee-id="" telephone="" email="" />
+    <div class="app-container">
+      <i-contact-info v-bind="contact" />
 
       <div class="is-flex is-align-items-center is-flex-wrap-wrap mt-6">
         <button
+          v-if="!contact.employeeId"
           type="button"
           class="button is-small is-outlined"
-          :class="{ 'is-loading': activatingEmployment }"
-          @click="activateEmployment"
+          :class="{ 'is-loading': isActionContact }"
+          @click="actionContract(ContractEnum.ACTIVATE)"
         >
           Розпочати співпрацю
         </button>
-
         <button
+          v-else
+          :class="{ 'is-loading': isActionContact }"
           type="button"
-          class="button is-small is-outlined ml-3"
-          :class="{ 'is-loading': deactivatingEmployment }"
-          @click="deactivateEmployment"
+          class="button is-small is-outlined"
+          @click="actionContract(ContractEnum.DEACTIVATE)"
         >
           Припинити співпрацю
         </button>
       </div>
 
       <div v-if="!isEditFormOpened" class="is-flex is-align-items-center is-flex-wrap-wrap mt-2">
-        <button type="button" class="button is-small is-light" @click="isDeletionRequested = true">
+        <button type="button" class="button is-small is-light" @click="isDeletionModal = true">
           Видалити контакт
         </button>
 
@@ -35,24 +36,37 @@
         </button>
       </div>
 
-      <i-update-contact v-if="isEditFormOpened" :contact="contact" />
+      <i-update-contact v-if="isEditFormOpened" :contact="contact" @update="editAction" />
     </div>
+
     <teleport to="body">
-      <i-modal class="confirmation-modal">
+      <i-modal class="confirmation-modal" :modal-state="isDeletionModal" @update-state="closeModal">
         <div class="box">
-          <template>
+          <template v-if="!isDeleteStatus">
             <h3 class="has-text-weight-medium mb-1">Ви дійсно бажаєте видалити даний контакт?</h3>
             <p>Контакт не буде доступним в списку після видалення.</p>
             <div class="is-flex is-align-items-center is-justify-content-end mt-4">
-              <button type="button" class="button is-small is-light" @click="deleteContact">
+              <button
+                type="button"
+                class="button is-small is-light"
+                :class="{ 'is-loading': isDeleteContact }"
+                @click="deleteContact"
+              >
                 Так, видалити контакт
               </button>
 
-              <button type="button" class="button is-small is-dark ml-2">Ні, скасувати</button>
+              <button
+                :disabled="isDeleteContact"
+                type="button"
+                class="button is-small is-dark ml-2"
+                @click="closeModal"
+              >
+                Ні, скасувати
+              </button>
             </div>
           </template>
 
-          <p>контакт видалено зі списку</p>
+          <p v-else>контакт видалено зі списку</p>
         </div>
       </i-modal>
     </teleport>
@@ -63,6 +77,7 @@
 import IContactInfo from '@/components/contact/i-contact-info.vue';
 import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
 import ILoadingScreen from '@/components/loading/i-loading-screen.vue';
+import IModal from '@/components/modal/i-modal.vue';
 import { ContractEnum } from '@/enums/contract.enum.ts';
 import { EditFormEnum } from '@/enums/edit-form.enum.ts';
 import { RouteNameEnum } from '@/enums/router.enum.ts';

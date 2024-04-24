@@ -39,7 +39,7 @@ export const useTransformQuery = (): ((query: LocationQuery) => Query) => {
 export function useAddQueryParams() {
   const router = useRouter();
 
-  return async (queryParams: LocationQuery) => {
+  return async (queryParams: Query) => {
     const currentQuery = { ...router.currentRoute.value.query };
     const newQuery = { ...currentQuery, ...queryParams };
     await router.push({ query: newQuery });

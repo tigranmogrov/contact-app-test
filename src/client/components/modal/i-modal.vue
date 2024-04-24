@@ -31,6 +31,8 @@ const escapeHandler = (e: KeyboardEvent) => {
 document.addEventListener('keydown', escapeHandler);
 
 onUnmounted(() => {
+  document.documentElement.style.removeProperty('overflow');
+  document.body.style.removeProperty('overflow');
   document.removeEventListener('keydown', escapeHandler);
 });
 </script>

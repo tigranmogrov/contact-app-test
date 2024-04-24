@@ -8,12 +8,9 @@
       <i-pagination />
     </div>
   </section>
-
-  <add-contact-form ref="addFormComponent" @contact-added="load" />
 </template>
 
 <script setup lang="ts">
-import AddContactForm from '@/components/add-contact-form.component.vue';
 import IContactList from '@/components/contact/i-contact-list.vue';
 import IPagination from '@/components/pagination/i-pagination.vue';
 import IToolbar from '@/components/toolbar/i-toolbar.vue';

@@ -64,83 +64,19 @@ import IContactInfo from '@/components/contact/i-contact-info.vue';
 import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
 import ILoadingScreen from '@/components/loading/i-loading-screen.vue';
 import { ContractEnum } from '@/enums/contract.enum.ts';
-import { Contact } from '@/models';
-import { RouteName } from '@/router';
 import { useContactsStore } from '@/stores/contacts.store.ts';
-import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { IContact } from '@/types';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
 
-const route = useRoute();
 const contactStore = useContactsStore();
-
-const contact = ref<Contact | null>(null);
-
+const route = useRoute();
+const contact = ref<IContact | null>(null);
+const isDeletionModal = ref<boolean>(false);
+const isActionContact = ref<boolean>(false);
 const isEditFormOpened = ref(false);
-
-let fields = ref([
-  {
-    label: `Ім'я`,
-    name: 'firstname',
-    value: '',
-    initialValue: '',
-    required: true,
-    type: 'text'
-  },
-  {
-    label: `Прізвище`,
-    name: 'lastname',
-    value: '',
-    initialValue: '',
-    required: true,
-    type: 'text'
-  },
-  {
-    label: `По-батькові`,
-    name: 'middlename',
-    value: '',
-    initialValue: '',
-    required: false,
-    type: 'text'
-  },
-  {
-    label: `E-mail`,
-    name: 'email',
-    value: '',
-    initialValue: '',
-    required: false,
-    type: 'email'
-  }
-]);
-let error = ref<string | null>(null);
-
-const cancelEditing = () => {
-  fields.value.forEach((field) => (field.value = field.initialValue));
-  isEditFormOpened.value = false;
-  error.value = null;
-};
-
-onMounted(async () => {
-  // just to see the loader
-  setTimeout(async () => {
-    const data = (await axios.get('/api/contacts/' + route.params.id)).data;
-    contact.value = new Contact(data);
-
-    fields.value[0].value = fields.value[0].initialValue =
-      contact.value.personalization.name.firstname;
-    fields.value[1].value = fields.value[1].initialValue =
-      contact.value.personalization.name.lastname;
-    fields.value[2].value = fields.value[2].initialValue =
-      contact.value.personalization.name.middlename;
-    fields.value[3].value = fields.value[3].initialValue = contact.value.email;
-  }, 1000);
-});
-
-const router = useRouter();
-const isDeletionRequested = ref(false);
-
-const activatingEmployment = ref(false);
+const isDeleteContact = ref<boolean>(false);
+const isDeleteStatus = ref<boolean>(false);
 
 const actionContract = async (status: ContractEnum) => {
   try {
@@ -151,7 +87,21 @@ const actionContract = async (status: ContractEnum) => {
   }
 };
 
-const deactivatingEmployment = ref(false);
+const deleteContact = async () => {
+  isDeleteContact.value = true;
+  try {
+    await contactStore.deleteContact(String(route.params.id));
+    isDeleteStatus.value = true;
+    setTimeout(() => {
+      router.push({ name: RouteNameEnum.Contacts });
+      isDeleteStatus.value = false;
+    }, 700);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isDeleteContact.value = false;
+  }
+};
 </script>
 
 <style>

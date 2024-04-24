@@ -19,16 +19,24 @@ const pageQueryAction = (page: number, nextPage: number = page) => {
 };
 
 const updatePage = (page: number): void => {
-  contactStore.getContactsData({ fromPageNumber: page, toPageNumber: page });
-  pageQueryAction(page);
+  try {
+    contactStore.getContactsData({ fromPageNumber: page, toPageNumber: page });
+    pageQueryAction(page);
+  } catch (error: any) {
+    console.error(error);
+  }
 };
 
 const loadMore = (nextPage: number): void => {
-  contactStore.getContactsData({
-    fromPageNumber: fromPage.value,
-    toPageNumber: currentPage.value + nextPage
-  });
-  pageQueryAction(fromPage.value, currentPage.value + nextPage);
+  try {
+    contactStore.getContactsData({
+      fromPageNumber: fromPage.value,
+      toPageNumber: currentPage.value + nextPage
+    });
+    pageQueryAction(fromPage.value, currentPage.value + nextPage);
+  } catch (error: any) {
+    console.error(error);
+  }
 };
 </script>
 

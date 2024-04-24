@@ -144,9 +144,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style>
-.confirmation-modal .modal-content {
-  max-inline-size: 420px;
-}
-</style>

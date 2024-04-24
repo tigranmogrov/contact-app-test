@@ -78,6 +78,15 @@ export const useContactsStore = defineStore('contacts', () => {
     }
   };
 
+  const deleteContact = async (contactId: string): Promise<void> => {
+    try {
+      await API.delete(`/api/contacts/${contactId}`);
+    } catch (error: any) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   const setContactData = (data: IContactData): void => {
     contactData.last = data.last;
     contactData.toPageNumber = data.toPageNumber;
@@ -99,6 +108,7 @@ export const useContactsStore = defineStore('contacts', () => {
     getContactById,
     createContact,
     updateContact,
+    deleteContact,
     setContactData
   };
 });

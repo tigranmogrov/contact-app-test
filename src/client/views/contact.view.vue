@@ -62,7 +62,7 @@
 <script setup lang="ts">
 import IContactInfo from '@/components/contact/i-contact-info.vue';
 import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
-import ILoadingScreen from '@/components/loading/i-loading-screen.component.vue';
+import ILoadingScreen from '@/components/loading/i-loading-screen.vue';
 import { ContractEnum } from '@/enums/contract.enum.ts';
 import { Contact } from '@/models';
 import { RouteName } from '@/router';
@@ -78,7 +78,6 @@ const contactStore = useContactsStore();
 const contact = ref<Contact | null>(null);
 
 const isEditFormOpened = ref(false);
-const saving = ref(false);
 
 let fields = ref([
   {
@@ -137,26 +136,6 @@ onMounted(async () => {
     fields.value[3].value = fields.value[3].initialValue = contact.value.email;
   }, 1000);
 });
-
-async function save() {
-  error.value = null;
-  saving.value = true;
-
-  const data = fields.value.reduce(
-    (acc, field) => {
-      acc[field.name] = field.value?.trim();
-      return acc;
-    },
-    {} as Record<string, string | undefined>
-  );
-
-  await axios.put('/api/contacts/' + route.params.id, data);
-  contact.value = new Contact((await axios.get('/api/contacts/' + route.params.id)).data);
-
-  isEditFormOpened.value = false;
-
-  saving.value = false;
-}
 
 const router = useRouter();
 const isDeletionRequested = ref(false);

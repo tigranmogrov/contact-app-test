@@ -139,16 +139,6 @@ onMounted(async () => {
 
 const router = useRouter();
 const isDeletionRequested = ref(false);
-const deleting = ref(false);
-
-async function deleteContact() {
-  deleting.value = true;
-  await axios.delete('/api/contacts/' + route.params.id);
-  deleting.value = false;
-  isDeletionRequested.value = false;
-
-  router.push({ name: RouteName.Contacts });
-}
 
 const activatingEmployment = ref(false);
 

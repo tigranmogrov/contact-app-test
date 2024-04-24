@@ -63,14 +63,18 @@
 import IContactInfo from '@/components/contact/i-contact-info.vue';
 import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
 import ILoadingScreen from '@/components/loading/i-loading-screen.component.vue';
+import { ContractEnum } from '@/enums/contract.enum.ts';
 import { Contact } from '@/models';
 import { RouteName } from '@/router';
+import { useContactsStore } from '@/stores/contacts.store.ts';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 
 const route = useRoute();
+const contactStore = useContactsStore();
+
 const contact = ref<Contact | null>(null);
 
 const isEditFormOpened = ref(false);
@@ -168,30 +172,17 @@ async function deleteContact() {
 }
 
 const activatingEmployment = ref(false);
-async function activateEmployment() {
-  activatingEmployment.value = true;
-  await axios.post('/api/contacts/activate-employment', {
-    id: route.params.id
-  });
 
-  const data = (await axios.get('/api/contacts/' + route.params.id)).data;
-  contact.value = new Contact(data);
-
-  activatingEmployment.value = false;
-}
+const actionContract = async (status: ContractEnum) => {
+  try {
+    await contactStore.actionContract(String(route.params.id), status);
+    contact.value = await contactStore.getContactById(String(route.params.id));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const deactivatingEmployment = ref(false);
-async function deactivateEmployment() {
-  deactivatingEmployment.value = true;
-  await axios.post('/api/contacts/deactivate-employment', {
-    id: route.params.id
-  });
-
-  const data = (await axios.get('/api/contacts/' + route.params.id)).data;
-  contact.value = new Contact(data);
-
-  deactivatingEmployment.value = false;
-}
 </script>
 
 <style>

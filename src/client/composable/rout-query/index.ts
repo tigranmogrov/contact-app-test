@@ -1,7 +1,7 @@
 import { LocationQuery, useRouter } from 'vue-router';
 
 interface Query {
-  [key: string]: string | number | Record<string, string | number>;
+  [key: string]: any;
 }
 
 export const useTransformQuery = (): ((query: LocationQuery) => Query) => {

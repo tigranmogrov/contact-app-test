@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import IContactList from '@/components/contact/i-contact-list.vue';
+import IPagination from '@/components/pagination/i-pagination.vue';
+import IToolbar from '@/components/toolbar/i-toolbar.vue';
+</script>
+
 <template>
   <section class="section">
     <div class="container">
@@ -9,9 +15,3 @@
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-import IContactList from '@/components/contact/i-contact-list.vue';
-import IPagination from '@/components/pagination/i-pagination.vue';
-import IToolbar from '@/components/toolbar/i-toolbar.vue';
-</script>

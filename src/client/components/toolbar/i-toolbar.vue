@@ -15,9 +15,7 @@ const contactStore = useContactsStore();
 const addQueryParams = useAddQueryParams();
 const removeQueryParams = useRemoveQueryParams();
 const transformQuery = useTransformQuery();
-const parsedQuery = computed(() => transformQuery(router.currentRoute.value.query));
-const isEmployment = ref(parsedQuery.value['isEmployee'] ?? false);
-const selectedSortOption = ref(1);
+
 const sortOptions: IContactSortOptions[] = [
   {
     id: 1,
@@ -52,6 +50,20 @@ const sortOptions: IContactSortOptions[] = [
     title: `За ім'ям (Я - А)`
   }
 ];
+const parsedQuery = computed(() => transformQuery(router.currentRoute.value.query));
+
+const getSelectedSort = computed(() => {
+  const query = parsedQuery.value.sorting;
+  const queryDirection = query ? query.direction : 1;
+  const queryCriterion = query ? query.criterion : 1;
+  const option = sortOptions.find(
+    ({ value }) => value.criterion === queryCriterion && value.direction === queryDirection
+  );
+  return option?.id ?? 1;
+});
+
+const isEmployment = ref(parsedQuery.value['isEmployee'] ?? false);
+const selectedSortOption = ref(getSelectedSort.value);
 
 const getEmployment = (value: boolean) => {
   contactStore.getContactsData({
@@ -65,12 +77,31 @@ const getEmployment = (value: boolean) => {
     removeQueryParams(['isEmployee', 'fromPageNumber', 'toPageNumber']);
   }
 };
+const sortQueryParamsAction = (id: number, selected: { criterion: number; direction: number }) => {
+  if (id == 1) {
+    removeQueryParams(['sorting[criterion]', 'sorting[direction]']);
+  } else {
+    addQueryParams({
+      'sorting[criterion]': selected.criterion,
+      'sorting[direction]': selected.direction
+    });
+  }
+};
+
+const sortAction = (value: number) => {
+  const selectedOption = sortOptions.find((option) => option.id === value);
+
+  if (selectedOption) {
+    contactStore.getContactsData({ sorting: selectedOption.value });
+    sortQueryParamsAction(value, { ...selectedOption.value });
+  }
+};
 </script>
 
 <template>
   <div class="toolbar box">
     <label class="select is-small">
-      <select v-model="selectedSortOption">
+      <select v-model="selectedSortOption" @update:model-value="sortAction">
         <option
           v-for="option in sortOptions"
           :key="option.id"

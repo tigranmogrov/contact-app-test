@@ -35,50 +35,7 @@
         </button>
       </div>
 
-      <div v-if="isEditFormOpened" class="box mt-6">
-        <p class="title is-size-6">Редагувати контакт:</p>
-        <form class="form" @submit.prevent="save">
-          <div v-for="(field, index) in fields" :key="index" class="field">
-            <label :for="field.name" class="label is-size-7">
-              {{ field.label + (field.required ? ' *' : '') }}
-            </label>
-
-            <div class="control">
-              <input
-                :id="field.name"
-                v-model="field.value"
-                :type="field.type"
-                class="input is-small"
-                :required="field.required"
-                :disabled="saving"
-              />
-            </div>
-          </div>
-
-          <div v-if="error" class="field box has-background-danger-light">
-            <p class="help is-danger">
-              {{ error }}
-            </p>
-          </div>
-
-          <div class="field is-grouped mt-5">
-            <div class="control">
-              <button type="button" class="button is-small is-light" @click="cancelEditing">
-                Скасувати
-              </button>
-            </div>
-            <div class="control">
-              <button
-                type="submit"
-                class="button is-small is-dark"
-                :class="{ 'is-loading': saving }"
-              >
-                Зберегти
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <i-update-contact v-if="isEditFormOpened" :contact="contact" />
     </div>
     <teleport to="body">
       <i-modal class="confirmation-modal">
@@ -105,6 +62,7 @@
 <script setup lang="ts">
 import AppLoadingScreen from '@/components/app-loading-screen.component.vue';
 import IContactInfo from '@/components/contact/i-contact-info.vue';
+import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
 import { Contact } from '@/models';
 import { RouteName } from '@/router';
 import axios from 'axios';

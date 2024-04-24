@@ -1,0 +1,13 @@
+.contact-list {
+  display: grid;
+  gap: 16px;
+
+  li {
+    > * {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100px;
+    }
+  }
+}

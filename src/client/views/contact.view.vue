@@ -102,6 +102,10 @@ const deleteContact = async () => {
     isDeleteContact.value = false;
   }
 };
+
+const closeModal = () => {
+  isDeletionModal.value = false;
+};
 </script>
 
 <style>

@@ -19,6 +19,15 @@ export const useContactsStore = defineStore('contacts', () => {
   const fromPageNumber = computed(() => contactData.fromPageNumber);
   const lastPage = computed(() => contactData.toPageNumber === contactData.last);
 
+  const setContactData = (data: IContactData): void => {
+    contactData.last = data.last;
+    contactData.toPageNumber = data.toPageNumber;
+    contactData.fromPageNumber = data.fromPageNumber;
+    contactData.total = data.total;
+    contactData.size = data.size;
+    contactData.items = data.items;
+  };
+
   return {
     contactData,
     isLoading,
@@ -26,6 +35,7 @@ export const useContactsStore = defineStore('contacts', () => {
     currentPage,
     contacts,
     fromPageNumber,
-    lastPage
+    lastPage,
+    setContactData
   };
 });

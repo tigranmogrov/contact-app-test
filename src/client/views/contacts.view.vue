@@ -3,15 +3,20 @@ import IContactList from '@/components/contact/i-contact-list.vue';
 import ILoadingScreen from '@/components/loading/i-loading-screen.vue';
 import IPagination from '@/components/pagination/i-pagination.vue';
 import IToolbar from '@/components/toolbar/i-toolbar.vue';
+import { useTransformQuery } from '@/composable/rout-query';
 import { useContactsStore } from '@/stores/contacts.store.ts';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 const contactStore = useContactsStore();
-
+const transformQuery = useTransformQuery();
+const router = useRouter();
 const { isLoading, contacts } = storeToRefs(contactStore);
 const loading = computed(() => isLoading.value);
-contactStore.getContactsData({});
+onMounted(() => {
+  contactStore.getContactsData({ ...transformQuery(router.currentRoute.value.query) });
+});
 </script>
 
 <template>

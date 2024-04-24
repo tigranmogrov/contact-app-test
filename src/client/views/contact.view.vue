@@ -65,13 +65,15 @@ import IUpdateContact from '@/components/edit-form/i-update-contact.vue';
 import ILoadingScreen from '@/components/loading/i-loading-screen.vue';
 import { ContractEnum } from '@/enums/contract.enum.ts';
 import { EditFormEnum } from '@/enums/edit-form.enum.ts';
+import { RouteNameEnum } from '@/enums/router.enum.ts';
 import { useContactsStore } from '@/stores/contacts.store.ts';
 import { IContact, UpdateContactEmitType } from '@/types';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const contactStore = useContactsStore();
 const route = useRoute();
+const router = useRouter();
 const contact = ref<IContact | null>(null);
 const isDeletionModal = ref<boolean>(false);
 const isActionContact = ref<boolean>(false);

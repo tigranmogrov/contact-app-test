@@ -67,7 +67,7 @@ import { ContractEnum } from '@/enums/contract.enum.ts';
 import { EditFormEnum } from '@/enums/edit-form.enum.ts';
 import { useContactsStore } from '@/stores/contacts.store.ts';
 import { IContact, UpdateContactEmitType } from '@/types';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const contactStore = useContactsStore();
@@ -118,6 +118,14 @@ const editAction = async (event: UpdateContactEmitType) => {
       contact.value = await contactStore.getContactById(String(route.params.id));
   }
 };
+
+onMounted(async () => {
+  try {
+    contact.value = await contactStore.getContactById(String(route.params.id));
+  } catch (error: any) {
+    console.error(error);
+  }
+});
 </script>
 
 <style>

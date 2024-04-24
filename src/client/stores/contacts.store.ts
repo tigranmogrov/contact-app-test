@@ -1,6 +1,6 @@
 import { API } from '@/api';
 import { config } from '@/config.ts';
-import { ContactsQueryType, IContactData } from '@/types';
+import { ContactsQueryType, IContact, IContactData } from '@/types';
 import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 
@@ -41,6 +41,15 @@ export const useContactsStore = defineStore('contacts', () => {
     }
   };
 
+  const getContactById = async (id: string): Promise<IContact> => {
+    try {
+      const { data } = await API.get<IContact>(`/api/contacts/${id}`);
+      return data;
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
   const setContactData = (data: IContactData): void => {
     contactData.last = data.last;
     contactData.toPageNumber = data.toPageNumber;
@@ -59,6 +68,7 @@ export const useContactsStore = defineStore('contacts', () => {
     fromPage,
     lastPage,
     getContactsData,
+    getContactById,
     setContactData
   };
 });
